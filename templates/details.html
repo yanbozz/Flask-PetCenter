@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}
+  {{pet["name"]}}'s Details - Paw Rescue Center
+{% endblock %}
+
+{% block content %}
+  <div style="float:left; border-style:double;">
+    <img src="{{ url_for('static', filename=pet.id|string + ".jpg") }}" height="350" />
+    <button style="background-color:tomato" onclick="location.href='{{ url_for('delete_pet', pet_id = pet.id)}}'"> Delete Pet </button>
+  </div>
+  <div style="float:left; margin:10px;">
+    <h1 class="title">{{pet.name}}</h1>
+    <p><b>Age: &nbsp; </b>{{pet.age}}</p>
+    <p><b>Bio: &nbsp; </b>{{pet.bio}}</p>
+    <form action="{{url_for('pet_details', pet_id = pet.id)}}" method="POST" style="padding:5px;">
+      {{ form.pet_name.label }}:
+        <br />{{ form.pet_name }}
+        {% if form.pet_name.errors %}
+          <br />
+              {% for error in form.pet_name.errors %}
+              <b id="error" style="color:tomato;">{{ error }}</b>
+              {% endfor %}
+        {% endif %}
+      <br />
+      {{ form.pet_age.label }}:
+        <br />{{ form.pet_age}}
+        {% if form.pet_age.errors %}
+        <br />
+            {% for error in form.pet_age.errors %}
+            <b id="error" style="color:tomato;">{{ error }}</b>
+            {% endfor %}
+        {% endif %}
+      <br />
+      {{ form.pet_bio.label }}:
+        <br />{{ form.pet_bio}}
+        {% if form.pet_bio.errors %}
+        <br />
+            {% for error in form.pet_bio.errors %}
+            <b id="error" style="color:tomato;">{{ error }}</b>
+            {% endfor %}
+        {% endif %}
+      <br />
+      {{ form.csrf_token }}
+      {{ form.submit }}
+  </div>
+{% endblock %}

@@ -1,0 +1,26 @@
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}" />
+  <title>{% block title %} {% endblock %}</title>
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+  <div>
+    <ul style="list-style-type: none; float: right; font-size: large;">
+      <li style="display:inline"><a href="{{ url_for('home') }}">Home</a></li>
+      <li style="display:inline"><a href="{{ url_for('about') }}">About</a></li>
+      {% if session.get('user') %}
+        <li style="display:inline"><a href="{{ url_for('logout') }}">Log Out</a></li>
+      {% else %}
+        <li style="display:inline"><a href="{{ url_for('signup') }}">Sign Up</a></li>
+        <li style="display:inline"><a href="{{ url_for('login') }}">Log In</a></li>
+      {% endif %}
+    </ul>
+  </div>
+  <div id="content">
+    {% block content %}
+    {% endblock %}
+  </div>
+</body>
+</html>
